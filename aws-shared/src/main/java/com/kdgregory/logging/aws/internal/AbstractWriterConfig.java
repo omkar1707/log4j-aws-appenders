@@ -27,6 +27,8 @@ public class AbstractWriterConfig
     public String clientFactoryMethod;
     public String clientRegion;
     public String clientEndpoint;
+    public String clientAccessKey;
+    public String clientSecretKey;
 
     /**
      *  @param batchDelay           Number of milliseconds to wait after receiving first
@@ -39,7 +41,7 @@ public class AbstractWriterConfig
      */
     public AbstractWriterConfig(
         long batchDelay, int discardThreshold, DiscardAction discardAction,
-        String clientFactoryMethod, String clientRegion, String clientEndpoint)
+        String clientFactoryMethod, String clientRegion, String clientEndpoint, String clientAccessKey, String clientSecretKey)
     {
         this.batchDelay = batchDelay;
         this.discardThreshold = discardThreshold;
@@ -47,5 +49,7 @@ public class AbstractWriterConfig
         this.clientFactoryMethod = clientFactoryMethod;
         this.clientRegion = clientRegion;
         this.clientEndpoint = clientEndpoint;
+        this.clientAccessKey = clientAccessKey;
+        this.clientSecretKey = clientSecretKey;
     }
 }

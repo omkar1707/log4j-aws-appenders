@@ -45,9 +45,9 @@ extends AbstractWriterConfig
     public CloudWatchWriterConfig(
         String actualLogGroup, String actualLogStream, Integer retentionPeriod, boolean dedicatedWriter,
         long batchDelay, int discardThreshold, DiscardAction discardAction,
-        String clientFactoryMethod, String clientRegion, String clientEndpoint)
+        String clientFactoryMethod, String clientRegion, String clientEndpoint, String clientAccesskey, String clientSecretkey)
     {
-        super(batchDelay, discardThreshold, discardAction, clientFactoryMethod, clientRegion, clientEndpoint);
+        super(batchDelay, discardThreshold, discardAction, clientFactoryMethod, clientRegion, clientEndpoint, clientAccesskey, clientSecretkey);
 
         this.logGroupName = actualLogGroup;
         this.logStreamName = actualLogStream;

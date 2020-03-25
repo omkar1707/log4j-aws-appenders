@@ -55,9 +55,9 @@ extends AbstractWriterConfig
         String streamName, String partitionKey,
         boolean autoCreate, int shardCount, Integer retentionPeriod,
         long batchDelay, int discardThreshold, DiscardAction discardAction,
-        String clientFactoryMethod, String clientRegion, String clientEndpoint)
+        String clientFactoryMethod, String clientRegion, String clientEndpoint, String accessKey, String secretKey)
     {
-        super(batchDelay, discardThreshold, discardAction, clientFactoryMethod, clientRegion, clientEndpoint);
+        super(batchDelay, discardThreshold, discardAction, clientFactoryMethod, clientRegion, clientEndpoint, accessKey, secretKey);
 
         this.streamName = streamName;
         this.partitionKey = partitionKey;

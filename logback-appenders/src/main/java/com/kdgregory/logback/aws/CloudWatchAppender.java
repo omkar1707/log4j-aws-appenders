@@ -179,6 +179,8 @@ extends AbstractAppender<CloudWatchWriterConfig,CloudWatchWriterStatistics,Cloud
     private String  logStream;
     private Integer retentionPeriod;
     private boolean dedicatedWriter;
+    private String accessKey;
+    private String secretKey;
 
 
     public CloudWatchAppender()
@@ -267,7 +269,23 @@ extends AbstractAppender<CloudWatchWriterConfig,CloudWatchWriterStatistics,Cloud
         return dedicatedWriter;
     }
 
-//----------------------------------------------------------------------------
+    public String getAccessKey() {
+        return accessKey;
+    }
+
+    public void setAccessKey(String accessKey) {
+        this.accessKey = accessKey;
+    }
+
+    public String getSecretKey() {
+        return secretKey;
+    }
+
+    public void setSecretKey(String secretKey) {
+        this.secretKey = secretKey;
+    }
+
+    //----------------------------------------------------------------------------
 //  AbstractAppender overrides
 //----------------------------------------------------------------------------
 
@@ -297,6 +315,6 @@ extends AbstractAppender<CloudWatchWriterConfig,CloudWatchWriterStatistics,Cloud
         return new CloudWatchWriterConfig(
             actualLogGroup, actualLogStream, retentionPeriod, dedicatedWriter,
             batchDelay, discardThreshold, discardAction,
-            clientFactory, clientRegion, clientEndpoint);
+            clientFactory, clientRegion, clientEndpoint, accessKey, secretKey);
     }
 }

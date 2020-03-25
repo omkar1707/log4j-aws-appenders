@@ -43,7 +43,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <!-- note: do not update this lest we accidentally use newer APIs -->
-        <aws-sdk.version>1.11.0</aws-sdk.version>
+        <aws-sdk.version>1.11.750</aws-sdk.version>
 
         <!-- version properties for all "top-level" projects, whether or not they have the dependency -->
 

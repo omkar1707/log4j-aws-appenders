@@ -45,9 +45,9 @@ extends AbstractWriterConfig
     public SNSWriterConfig(
         String topicName, String topicArn, String subject, boolean autoCreate,
         int discardThreshold, DiscardAction discardAction,
-        String clientFactoryMethod, String clientRegion, String clientEndpoint)
+        String clientFactoryMethod, String clientRegion, String clientEndpoint, String clientAccesskey, String clientSecretkey)
     {
-        super(1, discardThreshold, discardAction, clientFactoryMethod, clientRegion, clientEndpoint);
+        super(1, discardThreshold, discardAction, clientFactoryMethod, clientRegion, clientEndpoint, clientAccesskey, clientSecretkey);
 
         this.topicName = topicName;
         this.topicArn = topicArn;

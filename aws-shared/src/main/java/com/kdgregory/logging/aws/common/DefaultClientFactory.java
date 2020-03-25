@@ -18,6 +18,9 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.amazonaws.auth.AWSCredentialsProvider;
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
+import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.regions.Regions;
 
 import com.kdgregory.logging.common.factories.ClientFactory;
@@ -45,6 +48,8 @@ implements ClientFactory<AWSClientType>
     private String region;
     private String endpoint;
     private InternalLogger logger;
+    private String accessKey;
+    private String secretKey;
 
     // lookup tables for client constructors and factories
     // these are protected intance variables (rather than static) so that they
@@ -75,13 +80,15 @@ implements ClientFactory<AWSClientType>
      *                          to a client created via the default constructor.
      *  @param logger           Used to log creation events/errors.
      */
-    public DefaultClientFactory(Class<AWSClientType> clientType, String factoryMethod, String region, String endpoint, InternalLogger logger)
+    public DefaultClientFactory(Class<AWSClientType> clientType, String factoryMethod, String region, String endpoint, InternalLogger logger, String accessKey, String secretKey)
     {
         this.clientType = clientType;
         this.factoryMethodName = factoryMethod;
         this.region = region;
         this.endpoint = endpoint;
         this.logger = logger;
+        this.accessKey = accessKey;
+        this.secretKey = secretKey;
     }
 
 
@@ -146,7 +153,14 @@ implements ClientFactory<AWSClientType>
             if ((region != null) && ! region.isEmpty())
             {
                 logger.debug("setting region: " + region);
-                maybeSetAttribute(builder, "setRegion", region);
+                maybeSetAttribute(builder, "setRegion", region, String.class);
+            }
+
+            if(accessKey != null && secretKey != null && !accessKey.isEmpty() && !secretKey.isEmpty())
+            {
+                BasicAWSCredentials basicAWSCredentials = new BasicAWSCredentials(accessKey, secretKey);
+                AWSCredentialsProvider awsStaticCredentialsProvider = new AWSStaticCredentialsProvider(basicAWSCredentials);
+                maybeSetAttribute(builder, "setCredentials", awsStaticCredentialsProvider, AWSCredentialsProvider.class);
             }
 
             Method clientFactoryMethod = builder.getClass().getMethod("build");
@@ -190,7 +204,7 @@ implements ClientFactory<AWSClientType>
         if (client == null)
             return null;
 
-        if (maybeSetAttribute(client, "setEndpoint", endpoint))
+        if (maybeSetAttribute(client, "setEndpoint", endpoint, String.class))
         {
             logger.debug("setting endpoint: " + endpoint);
             return client;
@@ -241,7 +255,7 @@ implements ClientFactory<AWSClientType>
         {
             Regions resolvedRegion = Regions.fromName(value);
             logger.debug("setting region: " + value);
-            return maybeSetAttribute(client, "configureRegion", resolvedRegion);
+            return maybeSetAttribute(client, "configureRegion", resolvedRegion, Regions.class);
         }
         catch (IllegalArgumentException ex)
         {
@@ -251,7 +265,7 @@ implements ClientFactory<AWSClientType>
     }
 
 
-    protected boolean maybeSetAttribute(Object client, String setterName, Object value)
+    protected boolean maybeSetAttribute(Object client, String setterName, Object value, Class parameterType)
     {
         if (value == null)
             return false;
@@ -261,7 +275,7 @@ implements ClientFactory<AWSClientType>
 
         try
         {
-            Method setter = client.getClass().getMethod(setterName, value.getClass());
+            Method setter = client.getClass().getMethod(setterName, parameterType);
             setter.invoke(client, value);
             return true;
         }

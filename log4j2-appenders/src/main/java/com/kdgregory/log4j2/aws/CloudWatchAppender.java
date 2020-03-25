@@ -368,6 +368,41 @@ extends AbstractAppender<CloudWatchAppenderConfig,CloudWatchWriterStatistics,Clo
             return this;
         }
 
+
+        @PluginBuilderAttribute("accessKey")
+        private String accessKey;
+
+        /**
+         *  Sets the <code>rotationInterval</code> configuration property.
+         */
+        public CloudWatchAppenderBuilder setAccessKey(String accessKey)
+        {
+            this.accessKey = accessKey;
+            return this;
+        }
+
+        @Override
+        public String getAccessKey() {
+            return accessKey;
+        }
+
+        @PluginBuilderAttribute("secretKey")
+        private String secretKey;
+
+        /**
+         *  Sets the <code>rotationInterval</code> configuration property.
+         */
+        public CloudWatchAppenderBuilder setSecretKey(String secretKey)
+        {
+            this.secretKey = secretKey;
+            return this;
+        }
+
+        @Override
+        public String getSecretKey() {
+            return secretKey;
+        }
+
         /**
          *  Returns the <code>rotationInterval</code> configuration property.
          */
@@ -443,6 +478,6 @@ extends AbstractAppender<CloudWatchAppenderConfig,CloudWatchWriterStatistics,Clo
             actualLogGroup, actualLogStream, retentionPeriod,
             config.isDedicatedWriter(), config.getBatchDelay(),
             config.getDiscardThreshold(), discardAction,
-            config.getClientFactory(), config.getClientRegion(), config.getClientEndpoint());
+            config.getClientFactory(), config.getClientRegion(), config.getClientEndpoint(), config.getAccessKey(), config.getSecretKey());
     }
 }

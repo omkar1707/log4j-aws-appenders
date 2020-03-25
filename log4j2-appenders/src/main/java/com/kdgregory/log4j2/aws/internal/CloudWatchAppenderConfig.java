@@ -26,4 +26,6 @@ extends AbstractAppenderConfig
     String getLogStream();
     Integer getRetentionPeriod();
     boolean isDedicatedWriter();
+    String getAccessKey();
+    String getSecretKey();
 }

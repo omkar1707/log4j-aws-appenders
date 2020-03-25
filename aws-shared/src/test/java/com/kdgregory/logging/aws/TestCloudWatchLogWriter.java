@@ -95,7 +95,8 @@ extends AbstractLogWriterTest<CloudWatchLogWriter,CloudWatchWriterConfig,CloudWa
             DiscardAction.oldest,   // discard action
             null,                   // factory method
             null,                   // region
-            null);                  // endpoint
+            null,                   // endpoint
+                null, null);
 
         stats = new CloudWatchWriterStatistics();
 
@@ -118,7 +119,7 @@ extends AbstractLogWriterTest<CloudWatchLogWriter,CloudWatchWriterConfig,CloudWa
     @Test
     public void testConfiguration() throws Exception
     {
-        config = new CloudWatchWriterConfig("foo", "bar", 1, true, 123, 456, DiscardAction.newest, "com.example.factory.Method", "us-west-1", "logs.us-west-1.amazonaws.com");
+        config = new CloudWatchWriterConfig("foo", "bar", 1, true, 123, 456, DiscardAction.newest, "com.example.factory.Method", "us-west-1", "logs.us-west-1.amazonaws.com", null, null);
 
         assertEquals("log group name",                          "foo",                  config.logGroupName);
         assertEquals("log stream name",                         "bar",                  config.logStreamName);

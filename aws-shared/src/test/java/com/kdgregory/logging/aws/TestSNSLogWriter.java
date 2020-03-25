@@ -97,7 +97,7 @@ extends AbstractLogWriterTest<SNSLogWriter,SNSWriterConfig,SNSWriterStatistics,A
                 DiscardAction.oldest,
                 null,                   // clientFactoryMethod
                 null,                   // clientRegion
-                null);                  // clientEndpoint
+                null, null, null);                  // clientEndpoint
 
         stats = new SNSWriterStatistics();
 

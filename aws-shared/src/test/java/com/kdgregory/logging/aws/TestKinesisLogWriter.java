@@ -103,7 +103,7 @@ extends AbstractLogWriterTest<KinesisLogWriter,KinesisWriterConfig,KinesisWriter
             DiscardAction.oldest,                           // clientEndpoint
             null,                          // autoCreate
             null,                              // shardCount,
-            null);                          // retentionPeriod
+            null, null, null);                          // retentionPeriod
 
         stats = new KinesisWriterStatistics();
 
@@ -139,7 +139,7 @@ extends AbstractLogWriterTest<KinesisLogWriter,KinesisWriterConfig,KinesisWriter
             DiscardAction.newest,                           // clientEndpoint
             null,                          // autoCreate
             null,                              // shardCount,
-            null);                          // retentionPeriod
+            null, null, null);                          // retentionPeriod
 
         writer = new KinesisLogWriter(config, stats, internalLogger, dummyClientFactory);
         messageQueue = ClassUtil.getFieldValue(writer, "messageQueue", MessageQueue.class);
